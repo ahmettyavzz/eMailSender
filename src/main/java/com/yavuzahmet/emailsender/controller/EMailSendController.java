@@ -3,6 +3,7 @@ package com.yavuzahmet.emailsender.controller;
 import com.yavuzahmet.emailsender.dto.AttachmentMailRequest;
 import com.yavuzahmet.emailsender.dto.BaseMailRequest;
 import com.yavuzahmet.emailsender.service.MailService;
+import com.yavuzahmet.emailsender.service.MailValidateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,11 +18,17 @@ public class EMailSendController {
 
     @PostMapping
     public String sendMail(@RequestBody BaseMailRequest mailRequest) {
+        if (!MailValidateService.isEmailValid(mailRequest.getReceiver())) {
+            return "Please enter a valid e-mail address.";
+        }
         return mailService.sendEmail(mailRequest);
     }
 
     @PostMapping("/attachment")
     public String sendMailToAttachment(@RequestBody AttachmentMailRequest mailRequest) {
+        if (!MailValidateService.isEmailValid(mailRequest.getReceiver())) {
+            return "Please enter a valid e-mail address.";
+        }
         return mailService.sendEmailAttachment(mailRequest);
     }
 }
