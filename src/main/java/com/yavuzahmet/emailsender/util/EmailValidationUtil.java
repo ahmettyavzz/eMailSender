@@ -1,9 +1,12 @@
-package com.yavuzahmet.emailsender.service;
+package com.yavuzahmet.emailsender.util;
+
+import lombok.experimental.UtilityClass;
 
 import java.util.regex.Pattern;
 
-public class MailValidateService {
-    public static boolean isEmailValid(String email) {
+@UtilityClass
+public class EmailValidationUtil {
+    public boolean isEmailValid(String email) {
         {
             if (email == null || email.isEmpty()) {
                 return false;
